@@ -21,23 +21,23 @@ language, for the SIH compliance-checking project's Translate button.
 
 ```
 translator/
-├── main.py                 # App entrypoint — run this to start the server
-├── api.py                  # Handles the /api/translate HTTP endpoint
-├── translator_service.py   # Core logic: glossary → cache → provider → merge back
-├── field_mapper.py         # Figures out which JSON fields are translatable
-├── glossary.py             # Fixed correct translations for status words
-├── cache.py                # Remembers translations already done (faster/cheaper)
-├── config.py               # Settings: supported languages, timeouts, etc.
-├── models.py                # Request/response formats
-├── providers/               # Pluggable translation backends
+├── main.py                          # App entrypoint — run this to start the server
+├── api.py                           # Handles the /api/translate HTTP endpoint
+├── translator_service.py            # Core logic: glossary → cache → provider → merge back
+├── field_mapper.py                  # Figures out which JSON fields are translatable
+├── glossary.py                      # Fixed correct translations for status words
+├── cache.py                         # Remembers translations already done (faster/cheaper)
+├── config.py                        # Settings: supported languages, timeouts, etc.
+├── models.py                        # Request/response formats
+├── providers/                       # Pluggable translation backends
 │   ├── libretranslate_provider.py   # Currently in use (free, self-hosted)
 │   ├── bhashini_provider.py         # Government of India (pending approval)
 │   ├── google_translate_provider.py # Google Cloud (needs billing account)
 │   ├── mymemory_provider.py         # Free, zero-setup backup
 │   └── mock_provider.py             # Fake translation, for testing only
-├── tests/                   # Automated tests
-├── requirements.txt         # Python packages needed
-└── .env                     # Your actual settings/keys (not shared/committed)
+├── tests/                           # Automated tests
+├── requirements.txt                 # Python packages needed
+
 ```
 
 ## Requirements
@@ -86,7 +86,7 @@ Located at `translator fixed\.env` (same folder you run uvicorn from,
 ```
 TRANSLATION_PROVIDER=libretranslate
 LIBRETRANSLATE_URL=http://localhost:5000
-REQUEST_TIMEOUT_SECONDS=30
+REQUEST_TIMEOUT_SECONDS=20
 ```
 
 To switch providers later, change `TRANSLATION_PROVIDER` to `google`,
@@ -153,5 +153,3 @@ extraction, batching, caching, error handling) works correctly.
 - LibreTranslate's first translation after startup is slow (model
   warm-up) — do one "throwaway" translation before a live demo so it's
   already warmed up.
-- `translator fixed\.env` currently holds real API keys/settings for
-  this machine only — don't commit or share this file as-is.
